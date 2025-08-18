@@ -2,6 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCompany } from './dto/companies.dto';
 import { CreateVehicle } from './dto/vehicle.dto';
+import { CreateTariff } from './dto/tariff.dto';
 
 @Injectable()
 export class CompaniesService {
@@ -64,6 +65,21 @@ export class CompaniesService {
             }
         })
 
+        return true
+    }
+
+    async createTariff(companyId: string, dto: CreateTariff) {
+        const {name, rate, rateType, minPrice} = dto
+        const tariff = await this.prismaService.tariff.create({
+            data: {
+                companyId,
+                name,
+                rate,
+                rateType,
+                minPrice
+            }
+        })
+        
         return true
     }
 }

@@ -3,6 +3,7 @@ import { CompaniesService } from './companies.service';
 import { Authorization } from 'src/auth/decorators/authorization.decorator';
 import { CreateCompany } from './dto/companies.dto';
 import { CreateVehicle } from './dto/vehicle.dto';
+import { CreateTariff } from './dto/tariff.dto';
 
 @Controller('companies')
 export class CompaniesController {
@@ -28,5 +29,13 @@ export class CompaniesController {
     @Body() dto: CreateVehicle,
     @Param("id") companyId: string) {
     return await this.companiesService.createVehicle(companyId, dto)
+  }
+
+  @Authorization()
+  @Post(":id/tariff/create")
+  async createTariff(
+    @Body() dto: CreateTariff,
+    @Param("id") companyId: string) {
+    return await this.companiesService.createTariff(companyId, dto)
   }
 }
