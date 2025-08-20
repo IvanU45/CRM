@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator"
+import { IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength, Min } from "class-validator"
 import { RateType } from "generated/prisma"
 
 export class CreateTariff {
@@ -9,6 +9,7 @@ export class CreateTariff {
 
     @IsNotEmpty({message: "Укажите ставку"})
     @IsNumber({}, {message: "Ставка указывается в числовом формате"})
+    @Min(0, {message: "Ставка не может быть отрицательной"})
     rate: number  //ставка за км, кг, кмкг
 
     @IsNotEmpty({message: "Укажите тип ставки"})
@@ -17,5 +18,6 @@ export class CreateTariff {
 
     @IsNotEmpty({message: "Укажите минимальную цену"})
     @IsNumber({}, {message: "Цена указывается в числовом формате"})
+    @Min(0, {message: "Минимальная цена не может быть отрицательной"})
     minPrice: number
 }

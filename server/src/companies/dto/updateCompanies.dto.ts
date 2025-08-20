@@ -1,32 +1,34 @@
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, MaxLength } from "class-validator"
+import { IsEmail, IsOptional, IsPhoneNumber, IsString, MaxLength } from "class-validator"
 
-export class CreateCompany {
+export class UpdateCompany {
     @IsString()
-    @IsNotEmpty({message: "Укажите название"})
+    @IsOptional()
     @MaxLength(50, {message: "Максимальная длинна строки 50 символов"})
-    name: string
+    name?: string
 
+    @IsOptional()
     @MaxLength(200, {message: "Максимальная длинна строки 200 символов"})
-    description: string
+    description?: string
 
-    @IsNotEmpty({message: "Укажите адресс"})
+    @IsOptional()
     @MaxLength(50, {message: "Максимальная длинна строки 50 символов"})
-    address: string
+    address?: string
 
-    @IsNotEmpty({message: "Укажите зону покрытия"})
+    @IsOptional()
     @MaxLength(50, {message: "Максимальная длинна строки 50 символов"})
-    area: string
+    area?: string
     
     @IsPhoneNumber("RU")
-    @IsNotEmpty({message: "Укажите контактный телефон"})
+    @IsOptional()
     @MaxLength(20, {message: "Максимальная длинна строки 20 символов"})
-    phone: string
+    phone?: string
 
     @IsEmail()
-    @IsNotEmpty({message: "Укажите контактный email"})
+    @IsOptional()
     @MaxLength(50, {message: "Максимальная длинна строки 50 символов"})
-    email: string
+    email?: string
 
+    @IsOptional()
     @MaxLength(100, {message: "Максимальная длинна строки 100 символов"})
-    website: string
+    website?: string
 }

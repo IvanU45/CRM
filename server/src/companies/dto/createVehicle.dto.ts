@@ -1,4 +1,4 @@
-import {IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
+import {IsEnum, IsNotEmpty, IsNumber, IsString, MaxLength, Min } from "class-validator";
 import { VehicleStatus, VehicleType } from "generated/prisma";
 
 
@@ -18,10 +18,12 @@ export class CreateVehicle {
 
     @IsNotEmpty({message: "Укажите грузоподъемность"})
     @IsNumber({}, {message: "Укажите грузоподъемность в тоннах"})
+    @Min(0, {message: "Гузоподъемность не может быть отрицательной"})
     capacity: number
 
     @IsNotEmpty({message: "Укажите объем кузова"})
     @IsNumber({}, {message: "Укажите объем кузова в м3"})
+    @Min(0, {message: "Объем кузова не может быть отрицательным"})
     volume: number
 
     @IsNotEmpty({message: "Укажите статус транспортного средства"})
