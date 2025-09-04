@@ -8,6 +8,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Area {
+  STAVROPOLSKIY_KRAY @map("Ставропольский край")
+  ROSTOVSKAYA_OBLAST @map("Ростовская область")
+  KRASNODARSKIY_KRAY @map("Краснодарский край")
+}
+
 enum VehicleStatus {
   ACTIVE
   INACTIVE
@@ -44,7 +50,7 @@ model Company {
   name String @unique
   description String
   address String
-  area String
+  area Area
   phone String
   email String
   website String

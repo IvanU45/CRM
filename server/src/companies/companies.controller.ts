@@ -73,4 +73,25 @@ export class CompaniesController {
   ) {
     return await this.companiesService.updateTariff(id, dto)
   }
+
+  @Authorization()
+  @Post("company/:id/delete")
+  @HttpCode(HttpStatus.OK)
+  async deleteCompany(@Param("id") id: string) {
+    return await this.companiesService.deleteCompany(id)
+  }
+
+  @Authorization()
+  @Post("vehicle/:id/delete")
+  @HttpCode(HttpStatus.OK)
+  async deleteVehicle(@Param("id") id: string) {
+    return await this.companiesService.deleteVehicle(id)
+  }
+
+  @Authorization()
+  @Post("tariff/:id/delete")
+  @HttpCode(HttpStatus.OK)
+  async deleteTariff(@Param("id") id: string) {
+    return await this.companiesService.deleteTariff(id)
+  }
 }

@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, MaxLength } from "class-validator"
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, MaxLength } from "class-validator"
+import { Area } from "generated/prisma"
 
 export class CreateCompany {
     @IsString()
@@ -16,7 +17,8 @@ export class CreateCompany {
 
     @IsNotEmpty({message: "Укажите зону покрытия"})
     @MaxLength(50, {message: "Максимальная длинна строки 50 символов"})
-    area: string
+    @IsEnum(Area)
+    area: Area
     
     @IsPhoneNumber("RU")
     @IsNotEmpty({message: "Укажите контактный телефон"})

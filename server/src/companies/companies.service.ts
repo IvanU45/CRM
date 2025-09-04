@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCompany } from './dto/createCompanies.dto';
 import { CreateVehicle } from './dto/createVehicle.dto';
@@ -6,6 +6,7 @@ import { CreateTariff } from './dto/createTariff.dto';
 import { UpdateCompany } from './dto/updateCompanies.dto';
 import { UpdateVehicle } from './dto/updateVehicle.dto';
 import { UpdateTariff } from './dto/updateTariff.dto';
+import { Area, RateType, VehicleStatus, VehicleType } from 'generated/prisma';
 
 @Injectable()
 export class CompaniesService {
@@ -71,7 +72,20 @@ export class CompaniesService {
                 }
             }
         })
-        return companies
+        const vehicleStatus = Object.values(VehicleStatus)
+        const vehicleType = Object.values(VehicleType)
+        const rateType = Object.values(RateType)
+        const area = Object.values(Area)
+        const data = {
+            companies,
+            enum: {
+                area,
+                vehicleStatus,
+                vehicleType,
+                rateType
+            }
+        }
+        return data
     }
 
      async createVehicle(companyId: string, dto: CreateVehicle) {
@@ -181,6 +195,60 @@ export class CompaniesService {
         })
 
         return tariff
+    }
+
+    async deleteCompany(id: string) {
+        const company = await this.prismaService.company.findUnique({
+            where: {
+                id
+            }
+        })
+
+        if(!company) {
+            throw new NotFoundException("Компания не найдена")
+        }
+
+        return this.prismaService.company.delete({
+            where: {
+                id
+            }
+        })
+    }
+
+    async deleteVehicle(id: string) {
+        const vehicle = await this.prismaService.vehicle.findUnique({
+            where: {
+                id
+            }
+        })
+
+        if(!vehicle) {
+            throw new NotFoundException("Машина не найдена")
+        }
+        
+        return this.prismaService.vehicle.delete({
+            where: {
+                id
+            }
+        })
+    }
+
+    async deleteTariff(id: string) {
+        const tariff = await this.prismaService.tariff.findUnique({
+            where: {
+                id
+            }
+        })
+
+        if(!tariff) {
+            throw new NotFoundException("Машина не найдена")
+        }
+        
+        return this.prismaService.tariff.delete({
+            where: {
+                id
+            }
+        })
     }
 }
 
