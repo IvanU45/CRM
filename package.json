@@ -3,6 +3,6 @@
     "start:server": "cd server && yarn run start:dev",
     "start:client": "cd client && yarn run dev",
     "start:dev": "concurrently \"yarn run start:server\" \"yarn run start:client\"",
-    "install:all": "cd client && yarn add package.json && cd ../server && yarn add package.json"
+    "install:all": "cd client && yarn add package.json && cd ../server && yarn add package.json && yarn prisma generate" 
   }
 }
